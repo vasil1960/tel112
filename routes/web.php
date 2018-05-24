@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('redirect', 'RedirectController@redirect')->name('redirect');
+Route::get('/podelenie_autocomplete', 'AotocompleteController@podelenie_autocomplete')->name('podelenie_autocomplete');
+
+Route::group(['middleware' => ['active_session']], function() {
+
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/logout', 'LogoutController@logout')->name('logout');
+    Route::resource('signals', 'SignalsController');
+    
 });
