@@ -1,3 +1,4 @@
+
 @extends('signali.layouts.app')
 
 @section('content')
@@ -8,5 +9,5 @@
         <img src="{{ asset('assets/images/112.jpg') }}"  alt="Телефон 112 на Изпълнителна агенция по горите ">
       </div>
     </div>
-    
+
 @endsection
