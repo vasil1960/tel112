@@ -56,7 +56,7 @@
                     @if (is_array(old('pod_id')))
                         @foreach (old('pod_id') as $pod_id)
                             <option value="{{ $pod_id }}" selected="selected">{{ $pod_id }}</option>
-                        @endforeach
+                        @endforeach 
                     @endif
                 </select>
             </div>

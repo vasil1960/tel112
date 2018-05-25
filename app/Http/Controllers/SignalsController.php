@@ -8,6 +8,7 @@ use App\Podelenia;
 use App\Signal;
 use App\Traits\WriteLogos;
 use Illuminate\Http\Request;
+use Session;
 
 class SignalsController extends Controller {
 
@@ -105,8 +106,21 @@ class SignalsController extends Controller {
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id) {
-		//
+	public function show(Request $request ,$id) {
+
+		$signal = Signal::whereId($id)->first();
+
+        $data = [
+            'title' => 'Сигнал №: '. $id,
+            'jumbotron_title' => 'Сигнал №: ' .$id,
+            'signal' => $signal,
+            'jumbotrontext'=> 'Подробно описание на конкретен сигнал №: '. $id. ' (за '. Session::get('Podelenie') .')',
+            // 'sid' => $this->sid
+        ];
+        
+        $this->write_log($request, 'Разглеждане на сигнал №:'.$id);
+
+        return view('signali.signal', $data);
 	}
 
 	/**
