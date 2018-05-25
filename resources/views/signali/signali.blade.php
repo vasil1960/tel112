@@ -2,7 +2,8 @@
 
 @section('head')   
     @parent
-    <link href="{{ asset('assets/assets/datetimerpicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
+    {{--  <link href="{{ asset('assets/assets/datetimerpicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">   --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 @endsection
 
