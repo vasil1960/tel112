@@ -53,9 +53,9 @@
           "url":"https://cdn.datatables.net/plug-ins/1.10.16/i18n/Bulgarian.json",
         },
        "ajax": {
-          "url":"{!! route('datatables_by_pod.data',['ap'=>104]) !!}",
+          "url":"{!! route('datatables_by_pod.data') !!}",
           "dataType":"json",
-					// "type":"POST",
+					"type":"POST",
 					"data":{
             "_token":"{!! csrf_token() !!}",
             "ap":"{!! Session::get('AccessPodelenia') !!}",

@@ -20,7 +20,7 @@ class RedirectController extends Controller {
             'sid' => Session::get('sid')
         ];
         
-        $this->write_log($request, 'Пренасочване');
+        $this->write_log($request, 'Пренасочване към изход поради изтичане на сесията');
 
         return view( 'signali.restrict', $data );
     }

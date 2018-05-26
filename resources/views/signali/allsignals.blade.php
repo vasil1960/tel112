@@ -58,7 +58,7 @@
 					"type":"POST",
 					"data":{
             "_token":"{!! csrf_token() !!}",
-            //"ap":"{!! Session::get('AccessPodelenia') !!}",
+            // "ap":"{!! Session::get('AccessPodelenia') !!}",
             //"sid":"{!! Session::get('sid') !!}"
           }
 				},

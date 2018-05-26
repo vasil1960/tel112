@@ -1,4 +1,8 @@
 <?php
+/*
+    https://gitlab.com/maballo/laravel5-datatable-server-side-processing
+*/
+
 
 namespace App\Http\Controllers;
 
@@ -35,6 +39,10 @@ class DatatablesController extends Controller
     }
 
    
+
+    /*
+     https://gitlab.com/maballo/laravel5-datatable-server-side-processing
+    */
    
     public function anyData( Request $request){
 
@@ -66,26 +74,13 @@ class DatatablesController extends Controller
 		}else{
             $search = $request->input('search.value');
             
-			$posts = Signal::where('id', 'like', "%{$search}%")
-                                    ->orWhere('pod_id','like',"%{$search}%")
-                                    ->orWhere('glav_pod','like',"%{$search}%")
-                                    ->orWhere('name','like',"%{$search}%")
-                                    ->orWhere('phone','like',"%{$search}%")
-                                    ->orWhere('signaldate','like',"%{$search}%")
-                                    ->orWhere('opisanie','like',"%{$search}%")
+			$posts = Signal::filter()
                                     ->offset($start)
                                     ->limit($limit)
                                     ->orderBy($order, $dir)
                                     ->get();
                             
-			$totalFiltered = Signal::where('id', 'like', "%{$search}%")
-                                    ->orWhere('pod_id','like',"%{$search}%")
-                                    ->orWhere('glav_pod','like',"%{$search}%")
-                                    ->orWhere('name','like',"%{$search}%")
-                                    ->orWhere('phone','like',"%{$search}%")
-                                    ->orWhere('signaldate','like',"%{$search}%")
-                                    ->orWhere('opisanie','like',"%{$search}%")
-                                    ->count();
+			$totalFiltered = Signal::filter()->count();
 		}		
 						
 		$data = array();

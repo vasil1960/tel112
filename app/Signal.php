@@ -21,11 +21,17 @@ class Signal extends Model
     }
     
     public function scopePodid($query, $ap)
-    {
-        // if($ap == 1){
-        //     return null;
-        // }
-        
+    {   
         return $query->where('pod_id', '=', $ap);
+    }
+
+    public static function filter(){
+        static::where('id', 'like', "%{$search}%")
+                                    ->orWhere('pod_id','like',"%{$search}%")
+                                    ->orWhere('glav_pod','like',"%{$search}%")
+                                    ->orWhere('name','like',"%{$search}%")
+                                    ->orWhere('phone','like',"%{$search}%")
+                                    ->orWhere('signaldate','like',"%{$search}%")
+                                    ->orWhere('opisanie','like',"%{$search}%");
     }
 }

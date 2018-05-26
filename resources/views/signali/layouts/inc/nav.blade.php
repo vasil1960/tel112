@@ -33,7 +33,7 @@
             </li>
 
             <li class="nav-item">
-                 <a class="nav-link" href="{{ route('datatables_by_pod', ['sid'=>$sid, 'ap'=> $AccessPodelenia]) }}">Сигнали (по поделения))</a> 
+                 <a class="nav-link" href="{{ route('datatables_by_pod', ['sid'=>$sid]) }}">Сигнали (по поделения))</a> 
             </li>
 
         </ul>

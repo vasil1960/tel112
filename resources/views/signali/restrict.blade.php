@@ -32,7 +32,7 @@
     <main role="main"   style="background-color: beige;" >
 
       @section('jumbotron')
-        @include('signali.layouts.inc.jumbotron')
+        {{-- @include('signali.layouts.inc.jumbotron') --}}
       @show 
 
         <div class="container" style="">
@@ -42,9 +42,11 @@
           {{--  <h4 style="text-align: center"><a href="https://system.iag.bg">Вход</a></h4>  --}}
 
           
-            <div class="content text-danger text-center">
-                <div class="title">Нямате права за ползване на модула или сесията ви изтекла! </div>
-                <div class="content">Влезте отново от <a href="https://system.iag.bg">тук</a></div>
+            <div class="content text-danger text-center" style="padding: 100px">
+              <h5>Сесията ви изтекла и сте пренасочени към изход от модула! </h5>
+              <h5>Влезте отново от <a href="https://system.iag.bg">тук</a></h5>
+                {{-- <div class="title">Сесията ви изтекла и сте пренасочени към изход от модула! </div>
+                <div class="content">Влезте отново от <a href="https://system.iag.bg"><h5>тук</h5></a></div> --}}
             </div>
     
 

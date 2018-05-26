@@ -69,26 +69,13 @@ class DatatablesByPodController extends Controller
 		}else{
             $search = $request->input('search.value');
             
-			$posts = Signal::podid($ap)->where('id', 'like', "%{$search}%")
-                                    ->orWhere('pod_id','like',"%{$search}%")
-                                    ->orWhere('glav_pod','like',"%{$search}%")
-                                    ->orWhere('name','like',"%{$search}%")
-                                    ->orWhere('phone','like',"%{$search}%")
-                                    ->orWhere('signaldate','like',"%{$search}%")
-                                    ->orWhere('opisanie','like',"%{$search}%")
+			$posts = Signal::podid($ap)->filter()
                                     ->offset($start)
                                     ->limit($limit)
                                     ->orderBy($order, $dir)
                                     ->get();
                             
-			$totalFiltered = Signal::podid($ap)->where('id', 'like', "%{$search}%")
-                                    ->orWhere('pod_id','like',"%{$search}%")
-                                    ->orWhere('glav_pod','like',"%{$search}%")
-                                    ->orWhere('name','like',"%{$search}%")
-                                    ->orWhere('phone','like',"%{$search}%")
-                                    ->orWhere('signaldate','like',"%{$search}%")
-                                    ->orWhere('opisanie','like',"%{$search}%")
-                                    ->count();
+			$totalFiltered = Signal::podid($ap)->filter()->count();
 		}		
 						
 		$data = array();
