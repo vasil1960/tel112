@@ -22,7 +22,7 @@ class Signal extends Model
     
     public function scopePodid($query, $ap)
     {   
-        return $query->where('pod_id', '=', $ap);
+        return $query->where('iag112new.signali.pod_id', '=', $ap);
     }
 
     public static function filter(){

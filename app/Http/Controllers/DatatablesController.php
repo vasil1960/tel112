@@ -16,6 +16,8 @@ use Session;
 
 use App\Signal;
 
+use Yajra\Datatables\Datatables;
+
 // use DB;
 
 class DatatablesController extends Controller
@@ -46,70 +48,35 @@ class DatatablesController extends Controller
    
     public function anyData( Request $request){
 
-        // $ap = $this->ap;
-         
-        $columns = array(
-			0 => 'id',
-			1 => 'pod_id',
-			2 => 'glav_pod',
-            3 => 'name',
-            4 => 'phone',
-            5 => 'signaldate',
-            6 => 'opisanie',
-		);
-        
-        // podid() - scope signal model to global filter datatables by pod_id. (Signal model)
-		$totalData = Signal::count();
-		$limit = $request->input('length');
-		$start = $request->input('start');
-		$order = $columns[$request->input('order.0.column')];
-		$dir = $request->input('order.0.dir');
-		
-		if(empty($request->input('search.value'))){
-			$posts = Signal::offset($start)
-					->limit($limit)
-					->orderBy($order,$dir)
-					->get();
-			$totalFiltered = Signal::count();
-		}else{
-            $search = $request->input('search.value');
-            
-			$posts = Signal::filter()
-                                    ->offset($start)
-                                    ->limit($limit)
-                                    ->orderBy($order, $dir)
-                                    ->get();
-                            
-			$totalFiltered = Signal::filter()->count();
-		}		
-						
-		$data = array();
-		
-		if($posts){
-			foreach($posts as $r){
-				$nestedData['id'] = '
-                    <a href="signals/'.$r->id.'/?sid=' . Session::get('sid') . '" class="btn btn-outline-info btn-xs">'.$r->id .'</a>
-				';
-                $nestedData['pod_id'] = $r->podelenie->Pod_NameBg;
-                $nestedData['glav_pod'] = $r->rdg->Pod_NameBg;
-                $nestedData['name'] = $r->name;
-                $nestedData['phone'] = $r->phone;
-                $nestedData['signaldate'] = date('d.m.Y H:i:s',strtotime($r->signaldate));
-                $nestedData['opisanie'] = $r->opisanie;
-                $nestedData['action'] = '
-                    <a href="signals/'.$r->id.'/?sid=' . Session::get('sid') . '" class="btn btn-outline-info btn-xs">Още..</a>
-				';
-				$data[] = $nestedData;
-			}
-		}
-		
-		$json_data = array(
-			"draw"			  => intval($request->input('draw')),
-			"recordsTotal"    => intval($totalData),
-			"recordsFiltered" => intval($totalFiltered),
-			"data"			  => $data
-		);
-		
-		echo json_encode($json_data);
+//       INNER JOIN nug.podelenia AS dgs ON dgs.Pod_Id = s.pod_id
+//		 INNER JOIN nug.podelenia AS rdg ON rdg.Pod_Id = dgs.Glav_Pod
+//		 INNER JOIN nug.podelenia AS dp ON dp.Pod_Id = dgs.DP_ID
+
+        $signals = Signal::join('nug.podelenia as dgs','dgs.Pod_Id','=','signali.pod_id')
+                            ->join('nug.podelenia AS rdg','rdg.Pod_Id','=','dgs.Glav_Pod')
+                            ->join('nug.podelenia AS dp','dp.Pod_Id','=','dgs.DP_ID')
+                            ->select(['signali.id','signali.pod_id','signali.glav_pod',
+                                'signali.name','signali.phone','signali.signaldate as signaldate','signali.opisanie',
+                                'dgs.Pod_NameBg as PodName', 'rdg.Pod_NameBg as RdgName', 'dp.Pod_NameBg as DpName']);
+
+
+        return Datatables::of($signals)
+
+
+                ->editColumn('pod_id', function($signal){
+                    return  $signal->PodName . ' (' . $signal->RdgName. ', ' .$signal->DpName . ')';
+                })
+                ->editColumn('signaldate', function($signal){
+                    return  date('d.m.Y H:i:s', strtotime($signal->signaldate)) ;
+                })
+                ->editColumn('glav_pod', function($signal){
+                    return  $signal->RdgName ;
+                })
+                ->addColumn('action', function ($signal) {
+                    return '<a href="signal/' . $signal->id . '/?sid=' . Session::get('sid') . '" class="btn btn-outline-info btn-xs">Още..</a> 
+                            <a href="signal/' . $signal->id . '/?sid=' . Session::get('sid') . '" class="btn btn-outline-danger btn-xs">Ред..</a>';
+                })
+                ->removeColumn('glav_pod')
+                ->make(true);
 	}
 }
