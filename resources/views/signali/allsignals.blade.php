@@ -16,7 +16,7 @@
           <th scope="col">Поделение</th>
           {{--<th scope="col">РДГ</th> --}}
           <th scope="col">Име</th>
-          <th scope="col">Телефон</th>
+          {{--<th scope="col">Телефон</th>--}}
           <th scope="col">Дата</th>  
           <th scope="col">Описание</th>              
           <th scope="col"></th>
@@ -29,7 +29,7 @@
           <th scope="col">Поделение</th>
           {{--<th scope="col">РДГ</th>--}}
           <th scope="col">Име</th>
-          <th scope="col">Телефон</th>
+          {{--<th scope="col">Телефон</th>--}}
           <th scope="col">Дата</th>
           <th scope="col">Описание</th>                    
           <th scope="col"></th>
@@ -71,7 +71,7 @@
                   { "data": 'pod_id' },
 //                  { "data": 'glav_pod'},
                   { "data": 'name' },
-                  { "data": 'phone' },
+//                  { "data": 'phone' },
                   { "data": 'signaldate' },
                   { "data": 'opisanie'},
                   { "data": 'action', searchable:false, orderable:false},

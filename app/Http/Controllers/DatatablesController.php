@@ -53,8 +53,8 @@ class DatatablesController extends Controller
 //		 INNER JOIN nug.podelenia AS dp ON dp.Pod_Id = dgs.DP_ID
 
         $signals = Signal::join('nug.podelenia as dgs','dgs.Pod_Id','=','signali.pod_id')
-                            ->join('nug.podelenia AS rdg','rdg.Pod_Id','=','dgs.Glav_Pod')
-                            ->join('nug.podelenia AS dp','dp.Pod_Id','=','dgs.DP_ID')
+                            ->leftJoin('nug.podelenia AS rdg','rdg.Pod_Id','=','dgs.Glav_Pod')
+                            ->leftJoin('nug.podelenia AS dp','dp.Pod_Id','=','dgs.DP_ID')
                             ->select(['signali.id','signali.pod_id','signali.glav_pod',
                                 'signali.name','signali.phone','signali.signaldate as signaldate','signali.opisanie',
                                 'dgs.Pod_NameBg as PodName', 'rdg.Pod_NameBg as RdgName', 'dp.Pod_NameBg as DpName']);
@@ -72,11 +72,15 @@ class DatatablesController extends Controller
                 ->editColumn('glav_pod', function($signal){
                     return  $signal->RdgName ;
                 })
+                ->editColumn('name', function($signal){
+                    return  (string) $signal->name !=='' ? $signal->name : 'Анонимен'  . ' (тел. ' . $signal->phone. ')' ;
+                })
                 ->addColumn('action', function ($signal) {
                     return '<a href="signal/' . $signal->id . '/?sid=' . Session::get('sid') . '" class="btn btn-outline-info btn-xs">Още..</a> 
                             <a href="signal/' . $signal->id . '/?sid=' . Session::get('sid') . '" class="btn btn-outline-danger btn-xs">Ред..</a>';
                 })
                 ->removeColumn('glav_pod')
+                ->removeColumn('phone')
                 ->make(true);
 	}
 }
