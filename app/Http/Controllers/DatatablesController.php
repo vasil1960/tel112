@@ -54,6 +54,8 @@ class DatatablesController extends Controller
 //		 INNER JOIN nug.podelenia AS rdg ON rdg.Pod_Id = dgs.Glav_Pod
 //		 INNER JOIN nug.podelenia AS dp ON dp.Pod_Id = dgs.DP_ID
 
+//        http://dt54.yajrabox.com/eloquent
+
         $signals = Signal::join('nug.podelenia as dgs','dgs.Pod_Id','=','signali.pod_id')
                             ->leftJoin('nug.podelenia AS rdg','rdg.Pod_Id','=','dgs.Glav_Pod')
                             ->leftJoin('nug.podelenia AS dp','dp.Pod_Id','=','dgs.DP_ID')
