@@ -1,7 +1,7 @@
 <?php
 /*
-    https://gitlab.com/maballo/laravel5-datatable-server-side-processing
-*/
+ *   https://gitlab.com/maballo/laravel5-datatable-server-side-processing
+ */
 
 
 namespace App\Http\Controllers;
@@ -66,9 +66,8 @@ class DatatablesController extends Controller
 
         return Datatables::of($signals)
 
-
                 ->editColumn('pod_id', function($signal){
-                    return  $signal->PodName . ' (' . $signal->RdgName. ', ' .$signal->DpName . ')';
+                    return  $signal->PodName . ' (' .  $signal->RdgName. ', ' .$signal->DpName . ')';
                 })
                 ->editColumn('signaldate', function($signal){
                     return  date('d.m.Y H:i:s', strtotime($signal->signaldate)) ;
