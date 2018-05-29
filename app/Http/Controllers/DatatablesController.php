@@ -18,11 +18,15 @@ use App\Signal;
 
 use Yajra\Datatables\Datatables;
 
+use App\Traits\WriteLogos;
+
 // use DB;
 
 class DatatablesController extends Controller
 {
-    //
+
+    use WriteLogos;
+
     public function __construct(){
         // $this->sid = Session::get('sid');;
         // $this->ap = Session::get('AccessPodelenia');       
@@ -37,14 +41,12 @@ class DatatablesController extends Controller
             'sid' => Session::get('sid'),
         ];
 
+        $this->write_log($request, 'Отваряне на страница с всички сигнали');
+
         return view('signali.allsignals', $data);
     }
 
-   
 
-    /*
-     https://gitlab.com/maballo/laravel5-datatable-server-side-processing
-    */
    
     public function anyData( Request $request){
 
